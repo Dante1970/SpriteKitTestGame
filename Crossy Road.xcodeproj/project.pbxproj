@@ -14,6 +14,7 @@
 		BEB6758C2D3FBD0600B66830 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB675842D3FBD0600B66830 /* LaunchScreen.storyboard */; };
 		BEB6758D2D3FBD0600B66830 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB675862D3FBD0600B66830 /* Main.storyboard */; };
 		BEB675912D3FC37A00B66830 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675902D3FC37A00B66830 /* Player.swift */; };
+		BEB675932D4009E500B66830 /* Road.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675922D4009E500B66830 /* Road.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +26,7 @@
 		BEB675832D3FBD0600B66830 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BEB675852D3FBD0600B66830 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		BEB675902D3FC37A00B66830 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		BEB675922D4009E500B66830 /* Road.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Road.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,15 +59,48 @@
 		BEB675872D3FBD0600B66830 /* Crossy Road */ = {
 			isa = PBXGroup;
 			children = (
+				BEB675962D40200900B66830 /* Scenes */,
+				BEB675952D401FFE00B66830 /* ViewControllers */,
+				BEB675942D401FEF00B66830 /* Nodes */,
+				BEB675972D40202A00B66830 /* Supporting files */,
+			);
+			path = "Crossy Road";
+			sourceTree = "<group>";
+		};
+		BEB675942D401FEF00B66830 /* Nodes */ = {
+			isa = PBXGroup;
+			children = (
+				BEB675902D3FC37A00B66830 /* Player.swift */,
+				BEB675922D4009E500B66830 /* Road.swift */,
+			);
+			path = Nodes;
+			sourceTree = "<group>";
+		};
+		BEB675952D401FFE00B66830 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				BEB675822D3FBD0600B66830 /* GameViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		BEB675962D40200900B66830 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				BEB675812D3FBD0600B66830 /* GameScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		BEB675972D40202A00B66830 /* Supporting files */ = {
+			isa = PBXGroup;
+			children = (
 				BEB6757F2D3FBD0600B66830 /* AppDelegate.swift */,
 				BEB675802D3FBD0600B66830 /* Assets.xcassets */,
-				BEB675812D3FBD0600B66830 /* GameScene.swift */,
-				BEB675822D3FBD0600B66830 /* GameViewController.swift */,
-				BEB675902D3FC37A00B66830 /* Player.swift */,
 				BEB675842D3FBD0600B66830 /* LaunchScreen.storyboard */,
 				BEB675862D3FBD0600B66830 /* Main.storyboard */,
 			);
-			path = "Crossy Road";
+			path = "Supporting files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,6 +177,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEB675932D4009E500B66830 /* Road.swift in Sources */,
 				BEB675912D3FC37A00B66830 /* Player.swift in Sources */,
 				BEB675882D3FBD0600B66830 /* AppDelegate.swift in Sources */,
 				BEB675892D3FBD0600B66830 /* GameScene.swift in Sources */,

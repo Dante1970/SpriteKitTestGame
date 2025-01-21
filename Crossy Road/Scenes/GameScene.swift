@@ -13,6 +13,10 @@ class GameScene: SKScene {
     private var player: Player!
     private let cameraNode: SKCameraNode = SKCameraNode()
     
+    private var contentGenerationHeight: CGFloat = 390
+    private let roadHeight: CGFloat = 120
+    private let gapHeight: CGFloat = 60
+    
     override func didMove(to view: SKView) {
         backgroundColor = SKColor(red: 63 / 255, green: 111 / 255, blue: 24 / 255, alpha: 1)
         
@@ -24,8 +28,38 @@ class GameScene: SKScene {
         addChild(cameraNode)
         camera = cameraNode
         cameraNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        
+
+        spawnRoad()
         addSwipeGestureRecognizers()
+    }
+
+    private func spawnRoad() {
+        let spawnAction = SKAction.run { [weak self] in
+            guard let self = self else { return }
+            guard let view = self.view else { return }
+            
+            let visibleBounds = self.getVisibleBounds()
+            let upperVisibleBound = visibleBounds.maxY + gapHeight
+            
+            while self.contentGenerationHeight < upperVisibleBound {
+                
+                let roadCounts = Int.random(in: 1...2)
+                
+                for _ in 0..<roadCounts {
+                    let road = Road.populate(at: CGPoint(x: view.bounds.width / 2, y: self.contentGenerationHeight))
+                    addChild(road)
+                    self.contentGenerationHeight += roadHeight
+                }
+
+                self.contentGenerationHeight += gapHeight
+            }
+        }
+        
+        let delay = SKAction.wait(forDuration: 0.1)
+        let spawnSequence = SKAction.sequence([spawnAction, delay])
+        let repeatSpawn = SKAction.repeatForever(spawnSequence)
+        
+        run(repeatSpawn)
     }
     
     private func addSwipeGestureRecognizers() {
@@ -53,6 +87,18 @@ class GameScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         cameraNode.position.y += 0.5
+        removeOutOfBoundsNodes()
+    }
+    
+    private func removeOutOfBoundsNodes() {
+        let visibleBounds = getVisibleBounds()
+        let removalThresholdY = visibleBounds.minY - gapHeight
+        
+        children.forEach { node in
+            if node.position.y < removalThresholdY {
+                node.removeFromParent()
+            }
+        }
     }
     
     private func getVisibleBounds() -> CGRect {
