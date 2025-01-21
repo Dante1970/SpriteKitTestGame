@@ -21,6 +21,9 @@ class GameScene: SKScene {
     override func didMove(to view: SKView) {
         backgroundColor = SKColor(red: 63 / 255, green: 111 / 255, blue: 24 / 255, alpha: 1)
         
+        physicsWorld.contactDelegate = self
+        physicsWorld.gravity = CGVector.zero
+        
         let screen = UIScreen.main.bounds
         
         player = Player.populate(at: CGPoint(x: screen.size.width / 2, y: 300))
@@ -162,6 +165,22 @@ class GameScene: SKScene {
         let minY = centerY - height / 2
 
         return CGRect(x: minX, y: minY, width: width, height: height)
+    }
+    
+}
+
+extension GameScene: SKPhysicsContactDelegate {
+    
+    func didBegin(_ contact: SKPhysicsContact) {
+        let contactCategory: BitMaskCategory = [contact.bodyA.category, contact.bodyB.category]
+        switch contactCategory {
+        case [.car, .player]: print("car vs player")
+        default: preconditionFailure("Unable to detect collision category")
+        }
+    }
+    
+    func didEnd(_ contact: SKPhysicsContact) {
+        
     }
     
 }

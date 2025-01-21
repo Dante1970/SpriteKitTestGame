@@ -17,9 +17,17 @@ class Car: SKSpriteNode {
     private let initialSize = CGSize(width: 120, height: 60)
     
     init(imageName: String, name: String, direction: Direction, duration: TimeInterval = 8.0) {
-        super.init(texture: SKTexture(imageNamed: imageName), color: .clear, size: initialSize)
+        let texture = SKTexture(imageNamed: imageName)
+        super.init(texture: texture, color: .clear, size: initialSize)
         self.name = name
         self.zPosition = 2
+        
+        self.physicsBody = SKPhysicsBody(texture: texture, alphaThreshold: 0, size: self.size)
+        self.physicsBody?.isDynamic = true
+        self.physicsBody?.categoryBitMask = BitMaskCategory.car.rawValue
+        self.physicsBody?.collisionBitMask = BitMaskCategory.none.rawValue
+        self.physicsBody?.contactTestBitMask = BitMaskCategory.player.rawValue
+        
         startMovement(direction: direction, duration: duration)
     }
     
