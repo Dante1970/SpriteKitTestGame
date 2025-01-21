@@ -14,7 +14,7 @@ class Road: SKSpriteNode {
         road.position = point
         road.zPosition = 1
         road.size.height = 120
-        road.name = "sprite"
+        road.name = "road"
         return road
     }
     

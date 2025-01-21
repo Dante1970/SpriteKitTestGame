@@ -14,6 +14,7 @@ class GameScene: SKScene {
     private let cameraNode: SKCameraNode = SKCameraNode()
     
     private var contentGenerationHeight: CGFloat = 390
+    private let offscreenGenerationBuffer: CGFloat = 1000
     private let roadHeight: CGFloat = 120
     private let gapHeight: CGFloat = 60
     
@@ -28,7 +29,7 @@ class GameScene: SKScene {
         addChild(cameraNode)
         camera = cameraNode
         cameraNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
-
+        
         spawnRoad()
         addSwipeGestureRecognizers()
     }
@@ -39,7 +40,7 @@ class GameScene: SKScene {
             guard let view = self.view else { return }
             
             let visibleBounds = self.getVisibleBounds()
-            let upperVisibleBound = visibleBounds.maxY + gapHeight
+            let upperVisibleBound = visibleBounds.maxY + offscreenGenerationBuffer
             
             while self.contentGenerationHeight < upperVisibleBound {
                 
@@ -48,6 +49,7 @@ class GameScene: SKScene {
                 for _ in 0..<roadCounts {
                     let road = Road.populate(at: CGPoint(x: view.bounds.width / 2, y: self.contentGenerationHeight))
                     addChild(road)
+                    spawnCars(on: road)
                     self.contentGenerationHeight += roadHeight
                 }
 
@@ -62,6 +64,33 @@ class GameScene: SKScene {
         run(repeatSpawn)
     }
     
+    private func spawnCars(on road: Road) {
+        let initialLeftCarDelay = SKAction.wait(forDuration: Double.random(in: 1.0...3.0))
+        let leftCarSpawnAction = SKAction.run {
+            let leftCar = LeftCar()
+            road.addChild(leftCar)
+            leftCar.position.y = road.frame.height / 4
+            leftCar.position.x = road.frame.width
+        }
+        let leftCarDelay = SKAction.wait(forDuration: Double.random(in: 0.0...3.0))
+        let leftCarSequence = SKAction.sequence([initialLeftCarDelay, leftCarSpawnAction, leftCarDelay])
+        let leftCarRepeat = SKAction.repeatForever(leftCarSequence)
+        
+        let initialRightCarDelay = SKAction.wait(forDuration: Double.random(in: 1.0...3.0))
+        let rightCarSpawnAction = SKAction.run {
+            let rightCar = RightCar()
+            road.addChild(rightCar)
+            rightCar.position.y = -road.frame.height / 4
+            rightCar.position.x = -road.frame.width
+        }
+        let rightCarDelay = SKAction.wait(forDuration: Double.random(in: 0.0...3.0))
+        let rightCarSequence = SKAction.sequence([initialRightCarDelay, rightCarSpawnAction, rightCarDelay])
+        let rightCarRepeat = SKAction.repeatForever(rightCarSequence)
+        
+        let groupActions = SKAction.group([leftCarRepeat, rightCarRepeat])
+        road.run(groupActions)
+    }
+
     private func addSwipeGestureRecognizers() {
         let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
         gestureRecognizer.direction = .down
@@ -95,10 +124,29 @@ class GameScene: SKScene {
         let removalThresholdY = visibleBounds.minY - gapHeight
         
         children.forEach { node in
-            if node.position.y < removalThresholdY {
+            if node.name == "road" && node.position.y < removalThresholdY {
                 node.removeFromParent()
+            } else if node.name == "road" {
+                removeOutOfBoundsCars(in: node)
             }
         }
+    }
+    
+    private func removeOutOfBoundsCars(in road: SKNode) {
+        road.children.forEach { car in
+            if isOutOfBounds(car: car) {
+                car.removeFromParent()
+            }
+        }
+    }
+    
+    private func isOutOfBounds(car: SKNode) -> Bool {
+        if car.name == "left_car" {
+            return car.position.x < -self.size.width - 200
+        } else if car.name == "right_car" {
+            return car.position.x > self.size.width + 200
+        }
+        return false
     }
     
     private func getVisibleBounds() -> CGRect {
