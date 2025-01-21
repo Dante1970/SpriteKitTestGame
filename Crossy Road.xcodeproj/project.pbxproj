@@ -6,17 +6,26 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		BEB675882D3FBD0600B66830 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB6757F2D3FBD0600B66830 /* AppDelegate.swift */; };
+		BEB675892D3FBD0600B66830 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675812D3FBD0600B66830 /* GameScene.swift */; };
+		BEB6758A2D3FBD0600B66830 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675822D3FBD0600B66830 /* GameViewController.swift */; };
+		BEB6758B2D3FBD0600B66830 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BEB675802D3FBD0600B66830 /* Assets.xcassets */; };
+		BEB6758C2D3FBD0600B66830 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB675842D3FBD0600B66830 /* LaunchScreen.storyboard */; };
+		BEB6758D2D3FBD0600B66830 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BEB675862D3FBD0600B66830 /* Main.storyboard */; };
+		BEB675912D3FC37A00B66830 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675902D3FC37A00B66830 /* Player.swift */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		BEB675652D3FBA6A00B66830 /* Crossy Road.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Crossy Road.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BEB6757F2D3FBD0600B66830 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		BEB675802D3FBD0600B66830 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BEB675812D3FBD0600B66830 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
+		BEB675822D3FBD0600B66830 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
+		BEB675832D3FBD0600B66830 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		BEB675852D3FBD0600B66830 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		BEB675902D3FC37A00B66830 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		BEB675672D3FBA6A00B66830 /* Crossy Road */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Crossy Road";
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		BEB675622D3FBA6A00B66830 /* Frameworks */ = {
@@ -32,7 +41,7 @@
 		BEB6755C2D3FBA6A00B66830 = {
 			isa = PBXGroup;
 			children = (
-				BEB675672D3FBA6A00B66830 /* Crossy Road */,
+				BEB675872D3FBD0600B66830 /* Crossy Road */,
 				BEB675662D3FBA6A00B66830 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -43,6 +52,20 @@
 				BEB675652D3FBA6A00B66830 /* Crossy Road.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		BEB675872D3FBD0600B66830 /* Crossy Road */ = {
+			isa = PBXGroup;
+			children = (
+				BEB6757F2D3FBD0600B66830 /* AppDelegate.swift */,
+				BEB675802D3FBD0600B66830 /* Assets.xcassets */,
+				BEB675812D3FBD0600B66830 /* GameScene.swift */,
+				BEB675822D3FBD0600B66830 /* GameViewController.swift */,
+				BEB675902D3FC37A00B66830 /* Player.swift */,
+				BEB675842D3FBD0600B66830 /* LaunchScreen.storyboard */,
+				BEB675862D3FBD0600B66830 /* Main.storyboard */,
+			);
+			path = "Crossy Road";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -59,9 +82,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				BEB675672D3FBA6A00B66830 /* Crossy Road */,
 			);
 			name = "Crossy Road";
 			packageProductDependencies = (
@@ -109,6 +129,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEB6758B2D3FBD0600B66830 /* Assets.xcassets in Resources */,
+				BEB6758C2D3FBD0600B66830 /* LaunchScreen.storyboard in Resources */,
+				BEB6758D2D3FBD0600B66830 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,10 +142,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEB675912D3FC37A00B66830 /* Player.swift in Sources */,
+				BEB675882D3FBD0600B66830 /* AppDelegate.swift in Sources */,
+				BEB675892D3FBD0600B66830 /* GameScene.swift in Sources */,
+				BEB6758A2D3FBD0600B66830 /* GameViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		BEB675842D3FBD0600B66830 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BEB675832D3FBD0600B66830 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		BEB675862D3FBD0600B66830 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BEB675852D3FBD0600B66830 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		BEB6757A2D3FBA6C00B66830 /* Debug */ = {
