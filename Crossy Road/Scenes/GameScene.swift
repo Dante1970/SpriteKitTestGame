@@ -24,6 +24,7 @@ class GameScene: SKScene {
     
     override func didMove(to view: SKView) {
         scene?.isPaused = false
+        startTime = Date() - hud.time
         
         guard sceneManager.gameScene == nil else { return }
         
