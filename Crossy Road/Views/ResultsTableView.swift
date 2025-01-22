@@ -16,6 +16,7 @@ class ResultsTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
         self.delegate = self
         self.dataSource = self
         self.items = UserDefaults.standard.array(forKey: "results") as? [TimeInterval] ?? []
+        items.sort { $0 > $1 }
     }
     
     required init?(coder aDecoder: NSCoder) {

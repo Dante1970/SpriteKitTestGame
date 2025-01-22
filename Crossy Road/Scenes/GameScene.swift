@@ -165,7 +165,11 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        hud.time = Date().timeIntervalSince(startTime)
+        let timeElapsed = Date().timeIntervalSince(startTime)
+        hud.time = timeElapsed
+        if timeElapsed >= 60.0 && timeElapsed < 60.1  {
+            presentWinScene()
+        }
         cameraNode.position.y += 0.5
         removeOutOfBoundsNodes()
     }
@@ -217,17 +221,24 @@ class GameScene: SKScene {
         return CGRect(x: minX, y: minY, width: width, height: height)
     }
     
+    private func presentWinScene() {
+        saveTime(isWin: true)
+        let transition = SKTransition.doorsCloseVertical(withDuration: 1.0)
+        let gameOverScene = WinScene(size: self.size)
+        gameOverScene.scaleMode = .aspectFill
+        self.scene?.view?.presentScene(gameOverScene, transition: transition)
+    }
+    
     private func presentGameOverScene() {
         saveTime()
         let transition = SKTransition.doorsCloseVertical(withDuration: 1.0)
         let gameOverScene = GameOverScene(size: self.size)
-        gameOverScene.backScene = self
         gameOverScene.time = Date().timeIntervalSince(startTime)
         gameOverScene.scaleMode = .aspectFill
         self.scene?.view?.presentScene(gameOverScene, transition: transition)
     }
     
-    private func saveTime() {
+    private func saveTime(isWin: Bool = false) {
         var results = UserDefaults.standard.array(forKey: "results") as? [TimeInterval] ?? []
         
         if results.count > 9 {
@@ -235,7 +246,7 @@ class GameScene: SKScene {
             results.removeLast()
         }
         
-        results.append(Date().timeIntervalSince(startTime))
+        results.append(isWin ? 60.0 : Date().timeIntervalSince(startTime))
         UserDefaults.standard.set(results, forKey: "results")
     }
     

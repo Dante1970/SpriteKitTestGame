@@ -1,15 +1,33 @@
 //
-//  MenuScene.swift
+//  WinScene.swift
 //  Crossy Road
 //
-//  Created by Developer on 21.01.2025.
+//  Created by Developer on 22.01.2025.
 //
 
 import SpriteKit
 
-class MenuScene: SKScene {
+class WinScene: SKScene {
+    
+    private let timeLabel = SKLabelNode(text: "1m !")
     
     override func didMove(to view: SKView) {
+        
+        let header = ButtonNode(titled: "you win!")
+        header.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 150)
+        header.label.fontColor = .green
+        addChild(header)
+        
+        if timeLabel.parent == nil {
+            timeLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
+            timeLabel.horizontalAlignmentMode = .center
+            timeLabel.verticalAlignmentMode = .center
+            timeLabel.fontName = "AmericanTypewriter-Bold"
+            timeLabel.fontSize = 25
+            timeLabel.fontColor = .lightGray
+            addChild(timeLabel)
+        }
+        
         let titles = ["play", "results"]
         
         for (index, title) in titles.enumerated() {
