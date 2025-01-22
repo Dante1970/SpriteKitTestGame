@@ -15,6 +15,7 @@ class GameScene: SKScene {
     private let cameraNode: SKCameraNode = SKCameraNode()
     private let sceneManager = SceneManager.shared
     
+    private let initialPlayerPosition: CGFloat = 300
     private var contentGenerationHeight: CGFloat = 390
     private let offscreenGenerationBuffer: CGFloat = 1000
     private let roadHeight: CGFloat = 120
@@ -29,21 +30,10 @@ class GameScene: SKScene {
         guard sceneManager.gameScene == nil else { return }
         
         backgroundColor = SKColor(red: 63 / 255, green: 111 / 255, blue: 24 / 255, alpha: 1)
-        
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVector.zero
         
-        let screen = UIScreen.main.bounds
-        
-        player = Player.populate(at: CGPoint(x: screen.size.width / 2, y: 300))
-        addChild(player)
-        
-        addChild(cameraNode)
-        camera = cameraNode
-        cameraNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
-        
-        startTime = Date()
-        
+        configureStartScene()
         spawnRoad()
         addSwipeGestureRecognizers()
         createHUD()
@@ -54,6 +44,31 @@ class GameScene: SKScene {
         super.didChangeSize(oldSize)
         updateSafeAreaInsets()
     }
+    
+    override func update(_ currentTime: TimeInterval) {
+        let timeElapsed = Date().timeIntervalSince(startTime)
+        hud.time = timeElapsed
+        if timeElapsed >= 60.0 && timeElapsed < 60.1  {
+            presentWinScene()
+        }
+        cameraNode.position.y += 0.5
+        removeOutOfBoundsNodes()
+    }
+    
+    func configureStartScene() {
+        let screen = UIScreen.main.bounds
+        
+        player = Player.populate(at: CGPoint(x: screen.size.width / 2, y: initialPlayerPosition))
+        addChild(player)
+        
+        addChild(cameraNode)
+        camera = cameraNode
+        cameraNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
+        
+        startTime = Date()
+    }
+    
+    // MARK: - UI and HUD Setup
     
     private func updateSafeAreaInsets() {
         guard let safeAreaInsets = view?.safeAreaInsets else { return }
@@ -70,7 +85,9 @@ class GameScene: SKScene {
         cameraNode.addChild(hud)
         hud.configureUI()
     }
-
+    
+    // MARK: - Road and Car Spawning
+    
     private func spawnRoad() {
         let spawnAction = SKAction.run { [weak self] in
             guard let self = self else { return }
@@ -127,7 +144,9 @@ class GameScene: SKScene {
         let groupActions = SKAction.group([leftCarRepeat, rightCarRepeat])
         road.run(groupActions)
     }
-
+    
+    // MARK: - Player actions
+    
     private func addSwipeGestureRecognizers() {
         let gestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipe))
         gestureRecognizer.direction = .down
@@ -140,7 +159,7 @@ class GameScene: SKScene {
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         let visibleBounds = getVisibleBounds()
-        let playerOffsetThreshold = visibleBounds.minY + 300
+        let playerOffsetThreshold = visibleBounds.minY + initialPlayerPosition
         
         if player.position.y >= playerOffsetThreshold {
             let targetCameraY = cameraNode.position.y + (player.position.y - playerOffsetThreshold)
@@ -164,15 +183,7 @@ class GameScene: SKScene {
         }
     }
     
-    override func update(_ currentTime: TimeInterval) {
-        let timeElapsed = Date().timeIntervalSince(startTime)
-        hud.time = timeElapsed
-        if timeElapsed >= 60.0 && timeElapsed < 60.1  {
-            presentWinScene()
-        }
-        cameraNode.position.y += 0.5
-        removeOutOfBoundsNodes()
-    }
+    // MARK: - Node Removal and Bounds Checking
     
     private func removeOutOfBoundsNodes() {
         let visibleBounds = getVisibleBounds()
@@ -198,10 +209,11 @@ class GameScene: SKScene {
     }
     
     private func isOutOfBounds(car: SKNode) -> Bool {
+        let carWidth: CGFloat = 200
         if car.name == "left_car" {
-            return car.position.x < -self.size.width - 200
+            return car.position.x < -self.size.width - carWidth
         } else if car.name == "right_car" {
-            return car.position.x > self.size.width + 200
+            return car.position.x > self.size.width + carWidth
         }
         return false
     }
@@ -221,6 +233,8 @@ class GameScene: SKScene {
         return CGRect(x: minX, y: minY, width: width, height: height)
     }
     
+    // MARK: - Scene Transitions
+    
     private func presentWinScene() {
         saveTime(isWin: true)
         let transition = SKTransition.doorsCloseVertical(withDuration: 1.0)
@@ -238,6 +252,7 @@ class GameScene: SKScene {
         self.scene?.view?.presentScene(gameOverScene, transition: transition)
     }
     
+    // MARK: - Game Time Handling
     private func saveTime(isWin: Bool = false) {
         var results = UserDefaults.standard.array(forKey: "results") as? [TimeInterval] ?? []
         
@@ -251,6 +266,8 @@ class GameScene: SKScene {
     }
     
 }
+
+// MARK: - Extensions
 
 extension GameScene: SKPhysicsContactDelegate {
     
