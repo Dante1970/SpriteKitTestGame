@@ -22,6 +22,9 @@
 		BEB675A22D404F0500B66830 /* ButtonNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675A12D404F0500B66830 /* ButtonNode.swift */; };
 		BEB675A42D40503C00B66830 /* MenuScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675A32D40503C00B66830 /* MenuScene.swift */; };
 		BEB675A62D4051D400B66830 /* ResultsScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675A52D4051D400B66830 /* ResultsScene.swift */; };
+		BEB675A82D40E6B200B66830 /* PauseScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675A72D40E6B200B66830 /* PauseScene.swift */; };
+		BEB675AA2D40E71C00B66830 /* SceneManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675A92D40E71C00B66830 /* SceneManager.swift */; };
+		BEB675AC2D40E7E200B66830 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEB675AB2D40E7E200B66830 /* HUD.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,9 @@
 		BEB675A12D404F0500B66830 /* ButtonNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonNode.swift; sourceTree = "<group>"; };
 		BEB675A32D40503C00B66830 /* MenuScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuScene.swift; sourceTree = "<group>"; };
 		BEB675A52D4051D400B66830 /* ResultsScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsScene.swift; sourceTree = "<group>"; };
+		BEB675A72D40E6B200B66830 /* PauseScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PauseScene.swift; sourceTree = "<group>"; };
+		BEB675A92D40E71C00B66830 /* SceneManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneManager.swift; sourceTree = "<group>"; };
+		BEB675AB2D40E7E200B66830 /* HUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +97,7 @@
 				BEB6759A2D4042C100B66830 /* LeftCar.swift */,
 				BEB6759C2D4042DA00B66830 /* RightCar.swift */,
 				BEB675A12D404F0500B66830 /* ButtonNode.swift */,
+				BEB675AB2D40E7E200B66830 /* HUD.swift */,
 			);
 			path = Nodes;
 			sourceTree = "<group>";
@@ -109,6 +116,7 @@
 				BEB675812D3FBD0600B66830 /* GameScene.swift */,
 				BEB675A32D40503C00B66830 /* MenuScene.swift */,
 				BEB675A52D4051D400B66830 /* ResultsScene.swift */,
+				BEB675A72D40E6B200B66830 /* PauseScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -128,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				BEB6759E2D40451700B66830 /* BitMaskCategory.swift */,
+				BEB675A92D40E71C00B66830 /* SceneManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -210,11 +219,14 @@
 				BEB675A62D4051D400B66830 /* ResultsScene.swift in Sources */,
 				BEB6759F2D40451700B66830 /* BitMaskCategory.swift in Sources */,
 				BEB675A42D40503C00B66830 /* MenuScene.swift in Sources */,
+				BEB675A82D40E6B200B66830 /* PauseScene.swift in Sources */,
 				BEB675912D3FC37A00B66830 /* Player.swift in Sources */,
+				BEB675AC2D40E7E200B66830 /* HUD.swift in Sources */,
 				BEB675992D4026C200B66830 /* Car.swift in Sources */,
 				BEB6759B2D4042C100B66830 /* LeftCar.swift in Sources */,
 				BEB675882D3FBD0600B66830 /* AppDelegate.swift in Sources */,
 				BEB6759D2D4042DA00B66830 /* RightCar.swift in Sources */,
+				BEB675AA2D40E71C00B66830 /* SceneManager.swift in Sources */,
 				BEB675892D3FBD0600B66830 /* GameScene.swift in Sources */,
 				BEB6758A2D3FBD0600B66830 /* GameViewController.swift in Sources */,
 				BEB675A22D404F0500B66830 /* ButtonNode.swift in Sources */,

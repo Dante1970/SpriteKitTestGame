@@ -11,7 +11,9 @@ import GameplayKit
 class GameScene: SKScene {
     
     private var player: Player!
+    private let hud = HUD()
     private let cameraNode: SKCameraNode = SKCameraNode()
+    private let sceneManager = SceneManager.shared
     
     private var contentGenerationHeight: CGFloat = 390
     private let offscreenGenerationBuffer: CGFloat = 1000
@@ -19,6 +21,10 @@ class GameScene: SKScene {
     private let gapHeight: CGFloat = 60
     
     override func didMove(to view: SKView) {
+        scene?.isPaused = false
+        
+        guard sceneManager.gameScene == nil else { return }
+        
         backgroundColor = SKColor(red: 63 / 255, green: 111 / 255, blue: 24 / 255, alpha: 1)
         
         physicsWorld.contactDelegate = self
@@ -35,6 +41,29 @@ class GameScene: SKScene {
         
         spawnRoad()
         addSwipeGestureRecognizers()
+        createHUD()
+        updateSafeAreaInsets()
+    }
+    
+    override func didChangeSize(_ oldSize: CGSize) {
+        super.didChangeSize(oldSize)
+        updateSafeAreaInsets()
+    }
+    
+    private func updateSafeAreaInsets() {
+        guard let safeAreaInsets = view?.safeAreaInsets else { return }
+        
+        let margin = 16.0
+        let topOffset = safeAreaInsets.top
+        let verticalBasePosition = size.height / 2 - topOffset - margin
+        
+        hud.timeLabel.position = CGPoint(x: 0, y: verticalBasePosition)
+        hud.pauseButton.position = CGPoint(x: size.width / 2 - margin, y: verticalBasePosition)
+    }
+    
+    private func createHUD() {
+        cameraNode.addChild(hud)
+        hud.configureUI()
     }
 
     private func spawnRoad() {
@@ -105,7 +134,6 @@ class GameScene: SKScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        player.jump(isForward: true)
         let visibleBounds = getVisibleBounds()
         let playerOffsetThreshold = visibleBounds.minY + 300
         
@@ -114,6 +142,20 @@ class GameScene: SKScene {
             let moveAction = SKAction.moveTo(y: targetCameraY, duration: 0.3)
             moveAction.timingMode = .easeInEaseOut
             cameraNode.run(moveAction)
+        }
+        
+        let location = touches.first!.location(in: self)
+        let node = self.atPoint(location)
+        
+        if node.name == "pause" {
+            let transition = SKTransition.doorway(withDuration: 1.0)
+            let pauseScene = PauseScene(size: self.size)
+            pauseScene.scaleMode = .aspectFill
+            sceneManager.gameScene = self
+            self.scene?.isPaused = true
+            self.scene!.view?.presentScene(pauseScene, transition: transition)
+        } else {
+            player.jump(isForward: true)
         }
     }
     
