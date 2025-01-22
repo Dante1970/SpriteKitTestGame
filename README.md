@@ -1,9 +1,9 @@
 # Crossy Road
 
 <p align="center">
-  <img src="https://github.com/Dante1970/Test/blob/main/Screenshot_1.png" width="400"/>
-  <img src="https://github.com/Dante1970/Test/blob/main/Screenshot_2.png" width="400"/>
-  <img src="https://github.com/Dante1970/Test/blob/main/Screenshot_3.png" width="400"/>
+  <img src="https://github.com/Dante1970/SpriteKitTestGame/blob/main/Screenshot_1.png" width="200"/>
+  <img src="https://github.com/Dante1970/SpriteKitTestGame/blob/main/Screenshot_2.png" width="200"/>
+  <img src="https://github.com/Dante1970/SpriteKitTestGame/blob/main/Screenshot_3.png" width="200"/>
 </p>
 
 ## Description
