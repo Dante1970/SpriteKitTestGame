@@ -19,6 +19,7 @@ class GameScene: SKScene {
     private let offscreenGenerationBuffer: CGFloat = 1000
     private let roadHeight: CGFloat = 120
     private let gapHeight: CGFloat = 60
+    private var startTime: Date = Date()
     
     override func didMove(to view: SKView) {
         scene?.isPaused = false
@@ -39,6 +40,8 @@ class GameScene: SKScene {
         camera = cameraNode
         cameraNode.position = CGPoint(x: size.width / 2, y: size.height / 2)
         
+        startTime = Date()
+        
         spawnRoad()
         addSwipeGestureRecognizers()
         createHUD()
@@ -57,7 +60,7 @@ class GameScene: SKScene {
         let topOffset = safeAreaInsets.top
         let verticalBasePosition = size.height / 2 - topOffset - margin
         
-//        hud.timeLabel.position = CGPoint(x: 0, y: verticalBasePosition)
+        hud.timeLabel.position = CGPoint(x: 0, y: verticalBasePosition)
         hud.pauseButton.position = CGPoint(x: size.width / 2 - margin, y: verticalBasePosition)
     }
     
@@ -160,6 +163,7 @@ class GameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        hud.time = Date().timeIntervalSince(startTime)
         cameraNode.position.y += 0.5
         removeOutOfBoundsNodes()
     }
