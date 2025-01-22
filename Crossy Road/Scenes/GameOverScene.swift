@@ -1,5 +1,5 @@
 //
-//  PauseScene.swift
+//  GameOverScene.swift
 //  Crossy Road
 //
 //  Created by Developer on 22.01.2025.
@@ -7,18 +7,19 @@
 
 import SpriteKit
 
-class PauseScene: SKScene {
+class GameOverScene: SKScene {
     
     private let sceneManager = SceneManager.shared
+    var backScene: SKScene?
     
     override func didMove(to view: SKView) {
         
-        let header = ButtonNode(titled: "pause")
+        let header = ButtonNode(titled: "game over")
         header.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 150)
-        header.label.fontColor = .lightGray
+        header.label.fontColor = .red
         addChild(header)
         
-        let titles = ["restart", "results", "resume"]
+        let titles = ["restart", "results"]
         
         for (index, title) in titles.enumerated() {
             let button = ButtonNode(titled: title)
@@ -55,11 +56,6 @@ class PauseScene: SKScene {
             optionsScene.scaleMode = .aspectFill
             self.scene!.view?.presentScene(optionsScene, transition: transition)
             
-        } else if node.name == "resume" {
-            let transition = SKTransition.crossFade(withDuration: 1.0)
-            guard let gameScene = sceneManager.gameScene else { return }
-            gameScene.scaleMode = .aspectFill
-            self.scene!.view?.presentScene(gameScene, transition: transition)
         }
     }
 }

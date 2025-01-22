@@ -16,6 +16,7 @@ class Player: SKSpriteNode {
         let player = Player(texture: playerTexture)
         player.position = point
         player.zPosition = 10
+        player.name = "player"
         
         player.physicsBody = SKPhysicsBody(texture: playerTexture, alphaThreshold: 0, size: player.size)
         player.physicsBody?.isDynamic = false

@@ -57,7 +57,7 @@ class GameScene: SKScene {
         let topOffset = safeAreaInsets.top
         let verticalBasePosition = size.height / 2 - topOffset - margin
         
-        hud.timeLabel.position = CGPoint(x: 0, y: verticalBasePosition)
+//        hud.timeLabel.position = CGPoint(x: 0, y: verticalBasePosition)
         hud.pauseButton.position = CGPoint(x: size.width / 2 - margin, y: verticalBasePosition)
     }
     
@@ -101,7 +101,7 @@ class GameScene: SKScene {
         let leftCarSpawnAction = SKAction.run {
             let leftCar = LeftCar()
             road.addChild(leftCar)
-            leftCar.position.y = road.frame.height / 4
+            leftCar.position.y = road.frame.height / 4 + 5
             leftCar.position.x = road.frame.width
         }
         let leftCarDelay = SKAction.wait(forDuration: Double.random(in: 0.0...3.0))
@@ -112,7 +112,7 @@ class GameScene: SKScene {
         let rightCarSpawnAction = SKAction.run {
             let rightCar = RightCar()
             road.addChild(rightCar)
-            rightCar.position.y = -road.frame.height / 4
+            rightCar.position.y = -road.frame.height / 4 + 5
             rightCar.position.x = -road.frame.width
         }
         let rightCarDelay = SKAction.wait(forDuration: Double.random(in: 0.0...3.0))
@@ -173,6 +173,8 @@ class GameScene: SKScene {
                 node.removeFromParent()
             } else if node.name == "road" {
                 removeOutOfBoundsCars(in: node)
+            } else if node.name == "player" && node.position.y < removalThresholdY {
+                presentGameOverScene()
             }
         }
     }
@@ -209,6 +211,14 @@ class GameScene: SKScene {
         return CGRect(x: minX, y: minY, width: width, height: height)
     }
     
+    private func presentGameOverScene() {
+        let transition = SKTransition.doorsCloseVertical(withDuration: 1.0)
+        let gameOverScene = GameOverScene(size: self.size)
+        gameOverScene.backScene = self
+        gameOverScene.scaleMode = .aspectFill
+        self.scene?.view?.presentScene(gameOverScene, transition: transition)
+    }
+    
 }
 
 extension GameScene: SKPhysicsContactDelegate {
@@ -216,7 +226,7 @@ extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let contactCategory: BitMaskCategory = [contact.bodyA.category, contact.bodyB.category]
         switch contactCategory {
-        case [.car, .player]: print("car vs player")
+        case [.car, .player]: presentGameOverScene()
         default: preconditionFailure("Unable to detect collision category")
         }
     }
