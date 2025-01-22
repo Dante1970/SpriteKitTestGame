@@ -9,12 +9,13 @@ import UIKit
 
 class ResultsTableView: UITableView, UITableViewDelegate, UITableViewDataSource {
     
-    var items: [String] = ["14.5s", "28.3s", "59.9s"]
+    var items: [TimeInterval] = []
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
         self.delegate = self
         self.dataSource = self
+        self.items = UserDefaults.standard.array(forKey: "results") as? [TimeInterval] ?? []
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -30,7 +31,9 @@ class ResultsTableView: UITableView, UITableViewDelegate, UITableViewDataSource 
         cell.backgroundColor = .clear
         cell.selectionStyle = .none
         cell.textLabel?.font = UIFont(name: "AmericanTypewriter-Bold", size: 18)
-        cell.textLabel?.text = "\(indexPath.row + 1). \(items[indexPath.row])"
+        
+        let resultFormatted = String(format: "%.1fs", items[indexPath.row])
+        cell.textLabel?.text = "\(indexPath.row + 1). \(resultFormatted)"
         return cell
     }
 

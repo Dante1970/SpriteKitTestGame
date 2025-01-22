@@ -20,6 +20,7 @@ class GameScene: SKScene {
     private let roadHeight: CGFloat = 120
     private let gapHeight: CGFloat = 60
     private var startTime: Date = Date()
+    private var gameOverPresented = false
     
     override func didMove(to view: SKView) {
         scene?.isPaused = false
@@ -216,11 +217,25 @@ class GameScene: SKScene {
     }
     
     private func presentGameOverScene() {
+        saveTime()
         let transition = SKTransition.doorsCloseVertical(withDuration: 1.0)
         let gameOverScene = GameOverScene(size: self.size)
         gameOverScene.backScene = self
+        gameOverScene.time = Date().timeIntervalSince(startTime)
         gameOverScene.scaleMode = .aspectFill
         self.scene?.view?.presentScene(gameOverScene, transition: transition)
+    }
+    
+    private func saveTime() {
+        var results = UserDefaults.standard.array(forKey: "results") as? [TimeInterval] ?? []
+        
+        if results.count > 9 {
+            results.sort { $0 > $1 }
+            results.removeLast()
+        }
+        
+        results.append(Date().timeIntervalSince(startTime))
+        UserDefaults.standard.set(results, forKey: "results")
     }
     
 }
@@ -230,7 +245,11 @@ extension GameScene: SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let contactCategory: BitMaskCategory = [contact.bodyA.category, contact.bodyB.category]
         switch contactCategory {
-        case [.car, .player]: presentGameOverScene()
+        case [.car, .player]:
+            if !gameOverPresented {
+                gameOverPresented = true
+                presentGameOverScene()
+            }
         default: preconditionFailure("Unable to detect collision category")
         }
     }

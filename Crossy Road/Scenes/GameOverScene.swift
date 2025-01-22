@@ -8,9 +8,16 @@
 import SpriteKit
 
 class GameOverScene: SKScene {
+
+    var backScene: SKScene?
+    var time: TimeInterval = 0 {
+        didSet {
+            timeLabel.text = String(format: "%.1fs", time)
+        }
+    }
     
     private let sceneManager = SceneManager.shared
-    var backScene: SKScene?
+    private let timeLabel = SKLabelNode(text: "0.0s")
     
     override func didMove(to view: SKView) {
         
@@ -18,6 +25,16 @@ class GameOverScene: SKScene {
         header.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 150)
         header.label.fontColor = .red
         addChild(header)
+        
+        if timeLabel.parent == nil {
+            timeLabel.position = CGPoint(x: self.frame.midX, y: self.frame.midY + 100)
+            timeLabel.horizontalAlignmentMode = .center
+            timeLabel.verticalAlignmentMode = .center
+            timeLabel.fontName = "AmericanTypewriter-Bold"
+            timeLabel.fontSize = 25
+            timeLabel.fontColor = .lightGray
+            addChild(timeLabel)
+        }
         
         let titles = ["restart", "results"]
         
